@@ -11,5 +11,6 @@ namespace Application.Repositories
     {
         IQueryable<T> GetAll();
         IQueryable<T> GetWhere(Expression<Func<T,bool>> method);
+        IQueryable<T> OrderBy(Expression<Func<T, bool>> method);
     }
 }
