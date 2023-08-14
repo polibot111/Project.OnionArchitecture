@@ -1,4 +1,4 @@
-﻿using Application.RandomLocationCreator;
+﻿
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,6 @@ namespace Infrastructure
     {
         public static void AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddScoped<IRandomLocationCreator, RandomLocationCreator>();
         }
     }
 }

@@ -24,6 +24,8 @@ namespace Persistence.Repositories
         public IQueryable<T> GetAll() => Table;
 
         public IQueryable<T> GetWhere(Expression<Func<T, bool>> method) => Table.Where(method);
-    
+
+        public IQueryable<T> OrderBy(Expression<Func<T, bool>> method) => Table.OrderBy(method);
+
     }
 }
