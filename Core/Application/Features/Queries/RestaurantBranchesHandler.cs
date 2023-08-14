@@ -17,8 +17,8 @@ namespace Application.Features.Queries
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public double? Distance { get; set; }
-        public int Count { get; set; }
+        public double? Distance { get; set; } = 10000;
+        public int Count { get; set; } = 5;
     }
 
     public class RestaurantBranchesResponse
@@ -57,7 +57,7 @@ namespace Application.Features.Queries
                 Distance = CalculateDistance.CalculateDistanceBusiness(
                     request.Latitude, request.Longitude,
                     x.Latitude, x.Longitude)
-            }).Where(x => x.Distance < 10000).OrderBy(x => x.Distance).Take(5).ToList();
+            }).Where(x => x.Distance < request.Distance).OrderBy(x => x.Distance).Take(5).ToList();
 
             return new() { RestaurantBrancheDTO = restaurantBrancheDTO };
         }
