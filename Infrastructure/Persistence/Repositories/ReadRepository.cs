@@ -21,11 +21,14 @@ namespace Persistence.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public IQueryable<T> GetAll() => Table;
+        public IQueryable<T> GetAll(bool tracking = true)
+        {
+            var query = Table.AsQueryable();
+            if(!tracking)
+                query = query.AsNoTracking();
+            return query;
+        }
 
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method) => Table.Where(method);
-
-        public IQueryable<T> OrderBy(Expression<Func<T, bool>> method) => Table.OrderBy(method);
 
     }
 }
