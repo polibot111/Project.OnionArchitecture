@@ -18,6 +18,7 @@ namespace Persistence
         {
             services.AddDbContext<ProjectDbContext>(options => options.UseNpgsql(Configuration.ConnectionString));
 
+
             services.AddScoped<IWriteRestaurantBranchesRepo, WriteRestaurantBranchesRepo>();
             services.AddScoped<IReadRestaurantBranchesRepo, ReadRestaurantBranchesRepo>();
 
