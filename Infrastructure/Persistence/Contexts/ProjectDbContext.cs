@@ -18,6 +18,7 @@ namespace Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseSerialColumns();
             modelBuilder.Entity<RestaurantBranches>()
                 .ToTable("restaurant_branches");
         }
