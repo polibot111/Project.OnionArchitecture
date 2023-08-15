@@ -1,0 +1,54 @@
+version: '3.4'
+
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: Presentation\API\Dockerfile
+
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "81:80"
+      - "5341:5341"
+    volumes:
+      - seq-logs:/data
+
+  seq-gelf:
+    image: datalust/seq-input-gelf:latest
+    container_name: seq-gelf
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - GELF_ENABLE_DIAGNOSTICS=True
+      - SEQ_ADDRESS="http://seq:5341"
+            # Same errors with:
+            # - SEQ_ADDRESS="seq:5341"
+            # - SEQ_ADDRESS="http://host.docker.internal:5341"
+            # - SEQ_ADDRESS="http://localhost:5341"
+            # - SEQ_ADDRESS="localhost:5341"
+            # - SEQ_ADDRESS="127.0.0.1:5341"
+    depends_on:
+      - seq
+    ports:
+      - "12201:12201/udp"
+volumes:
+  db:
+    driver: local
+  seq-logs:

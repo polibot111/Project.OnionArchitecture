@@ -13,11 +13,12 @@ namespace Persistence
         {
             get
             {
-                ConfigurationManager configurationManager = new();
-                configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/API"));
-                configurationManager.AddJsonFile("appsettings.json");
+                IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory()) // appsettings.json dosyasının bulunduğu dizin
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
 
-                return configurationManager.GetConnectionString("PostgreSQL");
+                return configuration.GetConnectionString("PostgreSQL");
             }
         }
     }
