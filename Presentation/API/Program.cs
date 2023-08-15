@@ -1,4 +1,5 @@
 
+using API.Filters;
 using API.Middleware;
 using Application;
 using Application.Validators;
@@ -15,6 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistenceServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
+builder.Services.AddScoped<ResponseFilterAttribute>();
+
 
 builder.Services.AddControllers().
     AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<RestaurantBranchesSearchValidator>())

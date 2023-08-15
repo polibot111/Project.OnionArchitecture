@@ -1,4 +1,5 @@
-﻿using Application.Features.Queries;
+﻿using API.Filters;
+using Application.Features.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ServiceFilter(typeof(ResponseFilterAttribute))]
     public class SearchRestaurantByDistanceController : ControllerBase
     {
         readonly IMediator _mediator;
