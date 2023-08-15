@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repositories;
+using Persistence.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace Persistence
 
             services.AddScoped<IWriteRestaurantBranchesRepo, WriteRestaurantBranchesRepo>();
             services.AddScoped<IReadRestaurantBranchesRepo, ReadRestaurantBranchesRepo>();
+            services.AddScoped<DummyDataCreater>();
 
         }
     }
