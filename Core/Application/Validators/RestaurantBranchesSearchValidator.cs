@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Validators
 {
-    public class RestaurantBranchesSearchValidator : AbstractValidator<RestaurantBranchesRequest>
+    public class RestaurantBranchesSearchValidator : AbstractValidator<RestaurantBranchesQuery>
     {
         public RestaurantBranchesSearchValidator()
         {

@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Application.SomeBusiness;
 using Application.RequestObjForSomeBusiness;
 using Domain.Entities;
+using Application.Interface;
 
 namespace Application.Features.Queries
 {
@@ -29,10 +29,12 @@ namespace Application.Features.Queries
     public class RestaurantBranchesQueryHandler : IRequestHandler<RestaurantBranchesQuery, RestaurantBranchesResponse>
     {
         readonly IReadRestaurantBranchesRepo _readRestaurantBranches;
+        readonly ICalculateDistance _calculateDistance;
 
-        public RestaurantBranchesQueryHandler(IReadRestaurantBranchesRepo readRestaurantBranches)
+        public RestaurantBranchesQueryHandler(IReadRestaurantBranchesRepo readRestaurantBranches, ICalculateDistance calculateDistance)
         {
             _readRestaurantBranches = readRestaurantBranches;
+            _calculateDistance = calculateDistance;
         }
 
         public async Task<RestaurantBranchesResponse> Handle(RestaurantBranchesQuery request, CancellationToken cancellationToken)
@@ -54,7 +56,7 @@ namespace Application.Features.Queries
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 Name = x.Name,
-                Distance = CalculateDistance.CalculateDistanceBusiness(
+                Distance = _calculateDistance.CalculateDistanceBusiness(
                     request.Latitude, request.Longitude,
                     x.Latitude, x.Longitude)
             }).Where(x => x.Distance < request.Distance).OrderBy(x => x.Distance).Take(5).ToList();

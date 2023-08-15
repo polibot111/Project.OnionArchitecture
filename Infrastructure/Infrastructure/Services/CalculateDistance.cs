@@ -1,16 +1,16 @@
-﻿using Application.RequestObjForSomeBusiness;
-using MediatR;
+﻿using Application.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.SomeBusiness
+namespace Infrastructure.Services
 {
-    public static class CalculateDistance
+    public class CalculateDistance : ICalculateDistance
     {
-        static public double CalculateDistanceBusiness(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
+
+        public double CalculateDistanceBusiness(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
         {
             double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;
@@ -35,7 +35,5 @@ namespace Application.SomeBusiness
 
             return dist;
         }
-
-
     }
 }
