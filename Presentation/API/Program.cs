@@ -16,6 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
 builder.Services.AddPersistenceServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
@@ -39,6 +41,7 @@ Logger log = new LoggerConfiguration()
 builder.Host.UseSerilog(log);
 
 var app = builder.Build();
+
 
 
 // Configure the HTTP request pipeline.
