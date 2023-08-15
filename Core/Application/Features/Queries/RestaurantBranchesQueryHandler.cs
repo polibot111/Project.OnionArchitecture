@@ -13,7 +13,7 @@ using Domain.Entities;
 
 namespace Application.Features.Queries
 {
-    public class RestaurantBranchesRequest : IRequest<RestaurantBranchesResponse>
+    public class RestaurantBranchesQuery : IRequest<RestaurantBranchesResponse>
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
@@ -26,16 +26,16 @@ namespace Application.Features.Queries
         public List<RestaurantBranchesDTO> RestaurantBrancheDTO { get; set; }
     }
 
-    public class RestaurantBranchesHandler : IRequestHandler<RestaurantBranchesRequest, RestaurantBranchesResponse>
+    public class RestaurantBranchesQueryHandler : IRequestHandler<RestaurantBranchesQuery, RestaurantBranchesResponse>
     {
         readonly IReadRestaurantBranchesRepo _readRestaurantBranches;
 
-        public RestaurantBranchesHandler(IReadRestaurantBranchesRepo readRestaurantBranches)
+        public RestaurantBranchesQueryHandler(IReadRestaurantBranchesRepo readRestaurantBranches)
         {
             _readRestaurantBranches = readRestaurantBranches;
         }
 
-        public async Task<RestaurantBranchesResponse> Handle(RestaurantBranchesRequest request, CancellationToken cancellationToken)
+        public async Task<RestaurantBranchesResponse> Handle(RestaurantBranchesQuery request, CancellationToken cancellationToken)
         {
 
             var restaurants =
