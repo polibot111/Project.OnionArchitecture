@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Behaviours;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,12 @@ namespace Application
     {
         public static void AddApplicationServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddMediatR(x => x.RegisterServicesFromAssemblies(typeof(ServiceRegistration).Assembly));
+            serviceCollection.AddMediatR(x =>
+
+            {
+                x.RegisterServicesFromAssemblies(typeof(ServiceRegistration).Assembly);
+                x.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            });
         }
     }
 }

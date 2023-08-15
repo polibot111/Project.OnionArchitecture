@@ -1,9 +1,9 @@
 
+using API.Middleware;
 using Application;
 using Application.Validators;
 using FluentValidation.AspNetCore;
 using Infrastructure;
-using Infrastructure.Filters;
 using Persistence;
 using Serilog;
 using Serilog.Core;
@@ -16,7 +16,7 @@ builder.Services.AddPersistenceServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
 
-builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>()).
+builder.Services.AddControllers().
     AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<RestaurantBranchesSearchValidator>())
     .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -24,6 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 Logger log = new LoggerConfiguration()
+    .WriteTo.Console()
     .WriteTo.Seq(builder.Configuration["Seq:ServerUrl"])
     .Enrich.FromLogContext()
     .MinimumLevel.Information()
@@ -33,12 +34,15 @@ builder.Host.UseSerilog(log);
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
