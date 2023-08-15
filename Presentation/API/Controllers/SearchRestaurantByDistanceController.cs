@@ -17,7 +17,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchLocationByDistance([FromQuery] RestaurantBranchesRequest request)
+        public async Task<IActionResult> SearchLocationByDistance([FromQuery] RestaurantBranchesQuery request)
         {
             var response = await _mediator.Send(request);
             return Ok(response);
