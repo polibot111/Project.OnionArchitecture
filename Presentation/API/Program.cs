@@ -5,7 +5,10 @@ using Application;
 using Application.Validators;
 using FluentValidation.AspNetCore;
 using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Contexts;
+using Persistence.Services;
 using Serilog;
 using Serilog.Core;
 
@@ -52,5 +55,16 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    var dbContext = serviceProvider.GetRequiredService<ProjectDbContext>();
+    dbContext.Database.Migrate();
+
+    serviceProvider = scope.ServiceProvider;
+    var dummyDataCreater = serviceProvider.GetRequiredService<DummyDataCreater>();
+    await dummyDataCreater.AddRestaurant();
+}
 
 app.Run();

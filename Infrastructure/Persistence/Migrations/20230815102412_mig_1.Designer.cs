@@ -11,7 +11,7 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20230814132118_mig_1")]
+    [Migration("20230815102412_mig_1")]
     partial class mig_1
     {
         /// <inheritdoc />
@@ -22,7 +22,7 @@ namespace Persistence.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
 
             modelBuilder.Entity("Domain.Entities.RestaurantBranches", b =>
                 {
@@ -30,7 +30,7 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("id"));
 
                     b.Property<double>("Latitude")
                         .HasColumnType("double precision");

@@ -22,5 +22,10 @@ namespace Persistence.Contexts
             modelBuilder.Entity<RestaurantBranches>()
                 .ToTable("restaurant_branches");
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableServiceProviderCaching(false);
+        }
     }
 }
